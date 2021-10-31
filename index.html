@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title> BMI Calculator </title>
+
+        <style>
+            table, td {
+              border: 1px solid black;
+            }
+            </style>
+
+    </head>
+
+    <body>
+        <table id="bmi_table" class='table'>
+            <thead>
+                <th> BMI </th>
+                <th> BMI Category </th>
+                <th> Health Risk </th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </body>
+</html>
+
+<script>
+    var input_json = [
+   {
+      "Gender":"Male",
+      "HeightCm":175,
+      "WeightKg":75
+   },
+   {
+      "Gender":"Male",
+      "HeightCm":161,
+      "WeightKg":85
+   },
+   {
+      "Gender":"Male",
+      "HeightCm":180,
+      "WeightKg":77
+   },
+   {
+      "Gender":"Female",
+      "HeightCm":166,
+      "WeightKg":62
+   },
+   {
+      "Gender":"Female",
+      "HeightCm":150,
+      "WeightKg":70
+   },
+   {
+      "Gender":"Female",
+      "HeightCm":167,
+      "WeightKg":82
+   }
+ ]
+
+let bmi_value;
+let bmi_cat;
+var health_risk;
+
+var output = document.querySelector('#bmi_table tbody');
+
+input_json.forEach((element,i) => {
+
+    heightInMeters  = (input_json[i].HeightCm) / 100;
+    bmi_value       = ((input_json[i].WeightKg) / Math.pow((heightInMeters),2)).toFixed(1);
+
+    if( bmi_value <= 18.4 ) {
+        bmi_cat     = 'Underweight';
+        health_risk = ' Malnutrition risk';
+    }
+
+    else if( (bmi_value >= 18.5 ) && (bmi_value <= 24.9 )) {
+        bmi_cat     = 'Normalweight';
+        health_risk = 'Low risk';
+    }
+
+    else if( (bmi_value >= 25) && (bmi_value <= 29.9)) {
+        bmi_cat     = 'Overweight';
+        health_risk = 'Enhanced risk';
+    }
+    
+    else if( (bmi_value >= 31) && (bmi_value <= 40)) {
+        bmi_cat     = 'Moderately obese';
+        health_risk = 'Medium risk ';
+    }
+   
+    else if( (bmi_value >= 35) && (bmi_value <= 39.9)) {
+        bmi_cat     = 'Severely obese';
+        health_risk = 'High risk';
+    }
+
+    else if( (bmi_value[i] <= 40)) {
+        bmi_cat     = 'very serverly obese';
+        health_risk = 'Very High risk';
+    }
+
+    else {
+        bmi_cat     = 'Nothing Found';
+        health_risk = 'Nothing Found';
+    }
+
+    var bmi_obj = {};
+    bmi_obj.bmi_value   = bmi_value;
+    bmi_obj.bmi_cat     = bmi_cat;
+    bmi_obj.health_risk = health_risk;
+
+    var row = document.createElement('tr');
+    ['bmi_value', 'bmi_cat', 'health_risk'].forEach(function (prop) {
+        var td = document.createElement('td');
+        td.appendChild(document.createTextNode(bmi_obj[prop]));
+        row.appendChild(td);
+    });
+    output.appendChild(row);
+});
+
+</script>
+
+
+
+
+
